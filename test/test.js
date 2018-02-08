@@ -4,17 +4,21 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
+          // x this指全局的作用域，window
+          // √ this指say这个函数
           this.should.equal(null)
           done()
         }, 0)
       }
     }
+
     obj.say()
-  }) 
+  })
 
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
+      // this 指向 window
       this.should.equal(null)
     }
     test()
@@ -26,11 +30,13 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
+            // √ this指say这个函数
             this.should.equal(null)
           }
           return _say.bind(obj)
         }()
       }
+
       obj.say()
     })
 
@@ -39,6 +45,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
+          // this 指say这个函数
           this.should.equal(null)
         }
         return _say.bind(obj)
